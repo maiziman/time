@@ -1,0 +1,16 @@
+name:Update
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Update
+        run: |
+          response=$(curl -v -X POST "${{secrets.API_URL}}/api/cron/update" \
+            -H "Authorization: Bearer ${{secrets.CRON_SECRET}}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP_CODE:%{http_code}")
+          echo "Response: $response"
