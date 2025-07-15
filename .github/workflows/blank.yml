@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Trigger Update
         run: |
-          curl -s -X POST "${{secrets.API_URL}}/api/cron/update" \
+          response=$(curl -v -X POST "${{secrets.API_URL}}/api/cron/update" \
             -H "Authorization: Bearer ${{secrets.CRON_SECRET}}" \
-            -H "Content-Type: application/json"
+            -H "Content-Type: application/json" \
+            -w "\nHTTP_CODE:%{http_code}")
+          echo "Response: $response"
