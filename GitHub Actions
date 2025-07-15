@@ -1,0 +1,11 @@
+# GitHub Actions - 每15分钟触发一次
+name: Flexible Update
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # 15分钟是30/60/120的公约数
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -X POST "${{secrets.API_URL}}/api/cron/check-all"
